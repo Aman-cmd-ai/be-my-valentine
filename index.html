@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Eri ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap');
+        
+        body { 
+            background: linear-gradient(135deg, #fce4ec 0%, #ffebee 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .romantic-text { font-family: 'Dancing Script', cursive; }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.4);
+            animation: float 6s infinite linear;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .slide { display: none; }
+        .active { display: block; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Styles for your uploaded card images */
+        .card-image {
+            max-height: 300px;
+            width: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            margin: 0 auto 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen relative">
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="heart-container"></div>
+
+    <div id="container" class="z-10 bg-white/90 backdrop-blur-md p-8 rounded-[40px] shadow-2xl text-center max-w-md mx-4 border-2 border-pink-200">
+        
+        <div id="slide1" class="slide active">
+            <h1 class="romantic-text text-5xl text-pink-600 mb-6">Hi Eri...</h1>
+            <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                I made something special for you. Turn up your volume! ❤️
+            </p>
+            <button onclick="nextSlide(2); playMusic()" class="bg-pink-500 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-600 transition-all shadow-lg hover:scale-105">
+                Open it
+            </button>
+        </div>
+
+        <div id="slide2" class="slide">
+            <img src="distance.png" class="card-image" alt="Distance Quote">
+            <button onclick="nextSlide(3)" class="bg-pink-500 text-white px-8 py-3 rounded-full font-bold shadow-lg mt-4">
+                Next ❤️
+            </button>
+        </div>
+
+        <div id="slide3" class="slide">
+            <img src="promise.png" class="card-image" alt="Promise Quote">
+            <button onclick="nextSlide(4)" class="bg-pink-500 text-white px-8 py-3 rounded-full font-bold shadow-lg mt-4">
+                I have a question...
+            </button>
+        </div>
+
+        <div id="slide4" class="slide">
+            <img class="h-[180px] mx-auto rounded-2xl mb-6 shadow-sm" 
+                 src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif">
+            <h1 class="romantic-text text-4xl mb-8 text-pink-600 font-bold px-2">Will you be my Valentine, Eri?</h1>
+            
+            <div class="flex flex-wrap justify-center items-center gap-6 min-h-[120px] relative">
+                <button id="yesBtn" onclick="showSuccess()" class="bg-pink-500 text-white font-bold py-3 px-10 rounded-full transition-all shadow-xl z-20">
+                    YES!
+                </button>
+                <button id="noBtn" class="bg-gray-400 text-white font-bold py-2 px-6 rounded-full transition-all z-20">
+                    No
+                </button>
+            </div>
+        </div>
+
+        <div id="success-view" class="slide">
+            <img class="mx-auto rounded-2xl mb-6 h-[180px]" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif">
+            <h1 class="romantic-text text-5xl text-pink-600 mb-4 font-bold">Yay!!! ❤️</h1>
+            <div class="bg-pink-50 p-6 rounded-3xl border border-pink-100 mt-2">
+                <p class="text-pink-700 text-lg italic leading-relaxed font-medium">
+                    "Eri, I promise I will always do my best to keep you happy, no matter the distance between us."
+                </p>
+            </div>
+            <p class="text-pink-400 text-xs mt-4 uppercase tracking-widest">You're my forever Valentine</p>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️', '💖', '🌸', '✨', '☁️'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+
+        function playMusic() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Music waiting for interaction"));
+        }
+
+        function nextSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('slide' + slideNumber).classList.add('active');
+        }
+
+        function showSuccess() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('success-view').classList.add('active');
+            for(let i=0; i<60; i++) setTimeout(createHeart, i*30);
+        }
+
+        let noCount = 0;
+        const phrases = [
+            "No", "Are you sure?", "Really sure??", "Think again!", "Last chance!", 
+            "Surely not?", "You might regret this!", "Give it another thought!", 
+            "Are you absolutely certain?", "Don't do this to me!", "Have a heart!", 
+            "Don't be so cold!", "Change of heart?", "Reconsider? Please?", 
+            "Is that your final answer?", "You're breaking my heart ;("
+        ];
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            noBtn.innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            const newScale = 1 + (noCount * 0.4);
+            yesBtn.style.transform = `scale(${newScale})`;
+            
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${Math.max(10, x)}px`;
+            noBtn.style.top = `${Math.max(10, y)}px`;
+        });
+    </script>
+</body>
+</html>
