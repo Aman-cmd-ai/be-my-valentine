@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #ffe4e1; }
+        .transition-all { transition: all 0.2s ease-in-out; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen">
+    <div id="content" class="text-center p-6">
+        <div id="asking-view">
+            <img class="h-[200px] mx-auto rounded-lg" src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif" alt="Cute Bear">
+            <h1 class="text-4xl my-4 font-bold text-pink-600">Will you be my Valentine?</h1>
+            <div class="flex justify-center items-center gap-4">
+                <button id="yesBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-all">
+                    Yes
+                </button>
+                <button id="noBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-all">
+                    No
+                </button>
+            </div>
+        </div>
+
+        <div id="success-view" class="hidden">
+            <img class="mx-auto rounded-lg" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Bear Kisses">
+            <div class="text-4xl font-bold my-4 text-pink-600">Ok yay!!! ❤️</div>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const phrases = [
+            "No", "Are you sure?", "Really sure?", "Think again!", "Last chance!", 
+            "Surely not?", "You might regret this!", "Give it another thought!", 
+            "Are you absolutely certain?", "This could be a mistake!", "Have a heart!", 
+            "Don't be so cold!", "Change of heart?", "Wouldn't you reconsider?", 
+            "Is that your final answer?", "You're breaking my heart ;("
+        ];
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const askingView = document.getElementById('asking-view');
+        const successView = document.getElementById('success-view');
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            // Update No button text
+            noBtn.innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            
+            // Make Yes button grow
+            const newSize = noCount * 20 + 16;
+            yesBtn.style.fontSize = `${newSize}px`;
+            yesBtn.style.padding = `${noCount * 5 + 8}px ${noCount * 10 + 16}px`;
+
+            // Optional: Move the No button randomly like your first idea!
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            askingView.classList.add('hidden');
+            successView.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
