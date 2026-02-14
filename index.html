@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Eri ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap');
+        body { background: #fce4ec; font-family: 'Quicksand', sans-serif; overflow: hidden; }
+        .romantic-text { font-family: 'Dancing Script', cursive; }
+        .heart { position: absolute; color: rgba(255, 105, 180, 0.3); animation: float 6s infinite linear; pointer-events: none; }
+        @keyframes float { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+        .slide { display: none; }
+        .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        /* The White Card Design from your images */
+        .card {
+            background: white;
+            border-radius: 50px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #fce4ec;
+        }
+        .card-img { width: 150px; height: 150px; margin: 0 auto 30px; border-radius: 20px; object-fit: contain; }
+        .pink-btn { background: #f04a95; color: white; padding: 12px 40px; border-radius: 30px; font-weight: bold; transition: all 0.3s; }
+        .pink-btn:hover { background: #d03a7d; transform: scale(1.05); }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen relative">
+
+    <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    <div id="heart-container"></div>
+
+    <div id="slide1" class="slide active flex-col items-center">
+        <div class="card">
+            <h1 class="romantic-text text-5xl text-pink-600 mb-6">Hi Eri...</h1>
+            <p class="text-gray-500 text-lg mb-8 italic">I have a few things to say to you...</p>
+            <button onclick="nextSlide(2); playMusic()" class="pink-btn">Open ❤️</button>
+        </div>
+    </div>
+
+    <div id="slide2" class="slide flex-col items-center">
+        <div class="card">
+            <img src="distance.png" class="card-img" alt="Distance">
+            <p class="text-gray-600 text-xl mb-10 leading-relaxed italic">
+                "Distance is just a test to see how far love can travel."
+            </p>
+            <button onclick="nextSlide(3)" class="pink-btn">Next ❤️</button>
+        </div>
+    </div>
+
+    <div id="slide3" class="slide flex-col items-center">
+        <div class="card">
+            <img src="promise.png" class="card-img" alt="Promise">
+            <p class="text-gray-600 text-xl mb-10 leading-relaxed">
+                I promise I will always do my best to keep you happy and feel loved every single day.
+            </p>
+            <button onclick="nextSlide(4)" class="pink-btn">One more thing... ❤️</button>
+        </div>
+    </div>
+
+    <div id="slide4" class="slide flex-col items-center">
+        <div class="card">
+            <img class="h-40 mx-auto mb-6" src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif">
+            <h1 class="romantic-text text-4xl mb-8 text-pink-600 font-bold">Will you be my Valentine, Eri?</h1>
+            <div class="flex justify-center items-center gap-4 relative min-h-[100px]">
+                <button id="yesBtn" onclick="showSuccess()" class="bg-green-500 text-white font-bold py-2 px-8 rounded-full shadow-lg">Yes</button>
+                <button id="noBtn" class="bg-red-500 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-view" class="slide flex-col items-center">
+        <div class="card">
+            <img class="mx-auto h-40 mb-6" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif">
+            <h1 class="romantic-text text-5xl text-pink-600 mb-4 font-bold">Ok yay!!! ❤️</h1>
+            <p class="text-pink-700 text-lg italic">I love you so much, Eri!</p>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+
+        function playMusic() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.5;
+            music.play();
+        }
+
+        function nextSlide(n) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('slide' + n).classList.add('active');
+        }
+
+        function showSuccess() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('success-view').classList.add('active');
+            for(let i=0; i<50; i++) setTimeout(createHeart, i*30);
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        let noCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            const sizes = ["No", "Are you sure?", "Really?", "Think again!", "Please?", "💔"];
+            noBtn.innerText = sizes[Math.min(noCount, sizes.length - 1)];
+            yesBtn.style.transform = `scale(${1 + noCount * 0.4})`;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        });
+    </script>
+</body>
+</html>
